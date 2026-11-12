@@ -1,16 +1,11 @@
+// formato.js - HU-01: separador de miles para los campos de dinero (COP).
+
+/** Deja solo los dígitos: '1.500.000' -> '1500000'. */
+export function soloDigitos(valor) {
+  return String(valor).replace(/\D/g, '');
+}
+
+/** 1500000 -> '1.500.000'. Inserta un punto antes de cada grupo de 3 dígitos. */
 export function formatearMiles(valor) {
-  let digitos = '';
-  for (const c of String(valor)) {
-    if (c >= '0' && c <= '9') digitos += c;
-  }
-
-  let resultado = '';
-  let contador = 0;
-  for (let i = digitos.length - 1; i >= 0; i--) {
-    resultado = digitos[i] + resultado;
-    contador++;
-    if (contador % 3 === 0 && i > 0) resultado = '.' + resultado;
-  }
-
-  return resultado;
+  return soloDigitos(valor).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
